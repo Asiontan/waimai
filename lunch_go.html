@@ -11,18 +11,32 @@
         .title{font-size:17px;font-weight:bold;margin-bottom:12px;}
         .tip{font-size:14px;color:#666;margin:8px 0;}
         .code-block{background:#f3f3f3;padding:12px;border-radius:8px;margin-top:8px;word-break:break-all;}
+        .btn{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            color:#fff;
+            font-size:16px;
+            margin-top:10px;
+        }
+        .btn-meituan{background:#ff6700;}
+        .btn-taobao{background:#ff4400;}
     </style>
 </head>
 <body>
 <div class="box">
     <div class="title">🍔 美团外卖</div>
-    <div class="tip">正在尝试唤起美团APP</div>
+    <div class="tip">点击按钮唤起美团外卖APP</div>
+    <button class="btn btn-meituan" id="btnMt">打开美团外卖</button>
     <div class="tip">唤起失败：<a href="https://h5.waimai.meituan.com/">打开网页版美团外卖</a></div>
 </div>
 
 <div class="box">
     <div class="title">🛒 淘宝闪购</div>
-    <div class="tip">若没有自动打开淘宝，请复制下面淘口令</div>
+    <div class="tip">点击按钮尝试唤起淘宝APP</div>
+    <button class="btn btn-taobao" id="btnTb">打开淘宝</button>
+    <div class="tip">唤起失败，请复制下面淘口令</div>
     <div class="code-block">￥k3WbUhpH5p8￥</div>
     <div class="tip">复制后打开淘宝App自动跳转闪购专区</div>
 </div>
@@ -32,17 +46,19 @@
     const ua = navigator.userAgent;
     const isIOS = /iPhone|iPad|iPod/.test(ua);
 
-    // 优先唤起美团
-    window.location.href = "mtwm://waimai.meituan.com/home";
+    // 点击唤起美团
+    document.getElementById("btnMt").addEventListener("click",function(){
+        window.location.href = "mtwm://waimai.meituan.com/home";
+    });
 
-    // 1300ms 美团唤起失败，再尝试唤起淘宝
-    setTimeout(function(){
+    // 点击唤起淘宝
+    document.getElementById("btnTb").addEventListener("click",function(){
         if(isIOS){
             window.location.href = "tbopen://";
         }else{
             window.location.href = "intent://#Intent;scheme=tbopen;package=com.taobao.taobao;end";
         }
-    },1300);
+    });
 })();
 </script>
 </body>
